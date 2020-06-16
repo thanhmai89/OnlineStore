@@ -3,6 +3,15 @@
     require_once("./entities/category.class.php");
     require_once("./config/db.class.php");
 
+    // if(isset($_GET["id"])){
+    //     header('Location: not_found.php');
+    // }
+    // else{
+    //     $id = $_GET["id"];
+    //     $prods = Product::get_product($id);
+    //     $prods = $prod[0];
+    // }
+
     if(isset($_POST["btnsubmit"])){
         $productName = $_POST["txtName"];
         $cateID = $_POST["txtID"];
@@ -12,11 +21,11 @@
         $picture = $_FILES["txtpic"];
 
         $newProduct = new Product($productName, $cateID, $price, $quantity, $description, $picture);
-        $result = $newProduct->save();
+        $result = $newProduct->update();
         if(!$result){
             header("Location: add_product.php?failture");
         }else{
-            header("Location: add_product.php?inserted");
+            header("Location: add_product.php?updated");
         }
     }
 
@@ -25,16 +34,17 @@
     $categories = $db->select_to_array($sql);
 ?>
 
+<?php $url = $_SERVER['HTTP_HOST']?>
 <?php include_once("header.php");?>
 
 <center>
     <form action="" method="POST" enctype="multipart/form-data" style="width:800px">
         <?php
-            if(isset($_GET["inserted"])){
+            if(isset($_GET["updated"])){
         ?>
             <div class="alert alert-success" style="margin-top:10px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>Thêm sản phẩm thành công!
+                <strong>Cập nhật sản phẩm thành công!
             </div>
         <?php } ?>
 
@@ -43,12 +53,12 @@
         ?>
             <div class="alert alert-danger" style="margin-top:10px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>Thêm sản phẩm thất bại!
+                <strong>Cập nhật sản phẩm thất bại!
             </div>
         <?php } ?>
         
         <div class="lbltitle">
-            <h3 style="text-align:center; font-weight:bold; padding-bottom:20px; padding-top:10px">THÊM SẢN PHẨM MỚI</h3>
+            <h3 style="text-align:center; font-weight:bold; padding-bottom:20px; padding-top:10px">CẬP NHẬT SẢN PHẨM</h3>
         </div>
 
         <div class="row">
@@ -113,7 +123,7 @@
         </div>
        
         <div class="submit" style="margin-top:10px; margin-bottom: 10px">
-            <button class="btn btn-danger" type="submit" name="btnsubmit">Thêm sản phẩm</button>
+            <button class="btn btn-danger" type="submit" name="btnsubmit">Cập nhật</button>
         </div>
     </form>
 </center>
