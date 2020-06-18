@@ -63,7 +63,7 @@
         public static function list_product_relate($cateid, $id)
         {
             $db = new Db();
-            $sql = "SELECT * FROM product WHERE CateID ='$cateid' AND productID !='$id'";
+            $sql = "SELECT * FROM product WHERE CateID='$cateid' AND productID!='$id'";
             $result = $db->select_to_array($sql);
             return $result;
         }
@@ -71,7 +71,7 @@
         public static function get_product($id)
         {
             $db = new Db();
-            $sql = "SELECT * FROM product WHERE productID = '$id'";
+            $sql = "SELECT * FROM product WHERE productID='$id'";
             $result = $db->select_to_array($sql);
             return $result;
         } 

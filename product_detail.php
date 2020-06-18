@@ -19,59 +19,55 @@
 
 <?php $url = $_SERVER['HTTP_HOST']?>
 
-<center>
-    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-        <h3>Danh mục</h3>
-        <ul class="list-group">
+<div style="padding-top:20px" class="container">
+    <div class="col-sm-3">
+        <center>
+            <h3 style="text-align:center; font-weight:bold; padding-bottom:20px; padding-top:10px">DANH MỤC</h3>
+            <ul class="list-group">
+                <?php
+                    foreach($cates as $item){
+                        ?>
+                    <li style="width:70%" class="list-group-item">
+                        <a href="<?php echo "list_product.php?category=".$item["CategoryName"]."&cateid=".$item["CateID"]?>"><?php echo $item["CategoryName"]?></a>
+                    </li>
+                <?php }?>
+            </ul>
+        </center>
+    </div>
+
+    <div class="col-sm-9 panel panel-info">
+        <h3 style="text-align:center; font-weight:bold; padding-bottom:10px; padding-top:10px" class="panel-heading">CHI TIẾT SẢN PHẨM</h3>
+        <div class="row">
+            <div style="padding-left:30px" class="col-sm-4">
+                <img src="<?php echo "/PHP_Lab3/".$prod["Picture"];?>" class="img-reponsive" style="width:250px; height:250px; padding-top:10px" alt="Image">
+            </div>
+
+            <div class="col-sm-8">
+                <div style="padding-right:10px; text-align:center">
+                    <h3 class="text-info"><?php echo $prod["ProductName"]; ?></h3>
+                    <p>Mô tả: <?php echo $prod["Description"];?></p>
+                    <p>Giá: <?php echo $prod["Price"];?> đồng</p>
+                    <p><button type="button" class="btn btn-danger">Mua hàng</button></p>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="text-align:center; font-weight:bold; padding-bottom:10px; padding-top:10px" class="panel-heading">SẢN PHẨM LIÊN QUAN</h3>
+        <div class="row">
             <?php
-                foreach($cates as $item){
-                    ?>
-                <li style="width:30%" class="list-group-item">
-                    <a href="<?php echo "list_product.php?category=".$item["CategoryName"]."&cateid=".$item["CateID"]?>"><?php echo $item["CategoryName"]?></a>
-                </li>
-            <?php }?>
-        </ul>
-    </div>
-</center>
-
-<center>
-    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-        <h3>Chi tiết sản phẩm</h3>
-        <div class="card">
-            <div class="card-body">
-                <img class="card-img-top" style="width:300px; height:300px; margin: 10px" src="<?php echo $prod["Picture"]?>" alt="<?php echo $prod["ProductName"]?>">
-                <div style="display:inline-block">
-                    <h5 sty class="card-title">Tên sản phẩm: <?php echo $prod["ProductName"]?></h5>
-                        <p class="card-text">Mô tả: <?php echo $prod["Description"]?></p>
-                        <p class="card-text">Giá: <?php echo $prod["Price"]?></p>
-                        <button type="button" class="btn btn-primary">Mua ngay</button>
-                    </div>
+            foreach ($prods_relate as $item) {
+            ?>
+                <div class="col-sm-4">
+                    <a href="/PHP_Lab3/product_detail.php?id=<?php echo $item["ProductID"]; ?>">
+                        <img src="<?php echo "/PHP_Lab3/".$item["Picture"];?>" class="img-reponsive" style="width:200px; height:200px" alt="Image">
+                    </a>
+                    <p style="padding-left:40px; padding-top:10px" class="text-danger"><?php echo $item["ProductName"]; ?></p>
+                    <p style="padding-left:50px" class="text-info"><?php echo $item["Price"]; ?> đồng</p>
+                    <p style="padding-left:50px"><button type="button" class="btn btn-success">Mua hàng</button></p>
                 </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
-</center>
-
-<?php
-    foreach($prods_relate as $item){
-    ?>
-    <center>
-        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-            <h3>Sản phẩm liên quan</h3>
-            <div class="card">
-                <div class="card-body">
-                    <img class="card-img-top" style="width:300px; height:300px; margin: 10px" src="<?php echo $item["Picture"]?>" alt="<?php echo $item["ProductName"]?>">
-                    <div style="display:inline-block">
-                        <h5 sty class="card-title">Tên sản phẩm: <?php echo $item["ProductName"]?></h5>
-                            <p class="card-text">Mô tả: <?php echo $item["Description"]?></p>
-                            <p class="card-text">Giá: <?php echo $item["Price"]?></p>
-                            <button type="button" class="btn btn-primary">Mua ngay</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </center>
-<?php }?>
+</div>
 
 <?php include_once("footer.php");?>
