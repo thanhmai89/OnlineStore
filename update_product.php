@@ -3,14 +3,14 @@
     require_once("./entities/category.class.php");
     require_once("./config/db.class.php");
 
-    // if(isset($_GET["id"])){
-    //     header('Location: not_found.php');
-    // }
-    // else{
-    //     $id = $_GET["id"];
-    //     $prods = Product::get_product($id);
-    //     $prods = $prod[0];
-    // }
+    if(!isset($_GET["id"])){
+        header('Location: list_product.php');
+    }
+    else{
+        $id = $_GET["id"];
+        $prod = Product::get_product($id);
+        $prod = $prod[0];
+    }
 
     if(isset($_POST["btnsubmit"])){
         $productName = $_POST["txtName"];
@@ -21,11 +21,11 @@
         $picture = $_FILES["txtpic"];
 
         $newProduct = new Product($productName, $cateID, $price, $quantity, $description, $picture);
-        $result = $newProduct->update();
+        $result = $newProduct->update($id);
         if(!$result){
-            header("Location: add_product.php?failture");
+            header("Location: update_product.php?failture");
         }else{
-            header("Location: add_product.php?updated");
+            header("Location: update_product.php?updated");
         }
     }
 
@@ -37,95 +37,105 @@
 <?php $url = $_SERVER['HTTP_HOST']?>
 <?php include_once("header.php");?>
 
-<center>
-    <form action="" method="POST" enctype="multipart/form-data" style="width:800px">
-        <?php
-            if(isset($_GET["updated"])){
-        ?>
-            <div class="alert alert-success" style="margin-top:10px">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>Cập nhật sản phẩm thành công!
-            </div>
-        <?php } ?>
+<div class="container">
+    <div class="lbltitle">
+        <h3 style="text-align:center; font-weight:bold; padding-bottom:20px; padding-top:10px">CẬP NHẬT SẢN PHẨM</h3>
+    </div>
 
-        <?php
-            if(isset($_GET["failture"])){
-        ?>
-            <div class="alert alert-danger" style="margin-top:10px">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>Cập nhật sản phẩm thất bại!
+    <div class="col-sm-3">
+        <div class="row">
+            <div style="padding-right:50px" class="col-sm-4">
+                <img src="<?php echo "/PHP_Lab3/".$prod["Picture"];?>" class="img-reponsive" style="width:300px; height:350px; padding-top:10px" alt="Image">
             </div>
-        <?php } ?>
+        </div>
+    </div>
+    
+    <div class="col-sm-9">
+        <form action="" method="POST" enctype="multipart/form-data" style="width:800px">
+            <?php
+                if(isset($_GET["updated"])){
+            ?>
+                <div class="alert alert-success" style="margin-top:10px">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Cập nhật sản phẩm thành công!
+                </div>
+            <?php } ?>
+
+            <?php
+                if(isset($_GET["failture"])){
+            ?>
+                <div class="alert alert-danger" style="margin-top:10px">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Cập nhật sản phẩm thất bại!
+                </div>
+            <?php } ?>
+            
+            <div class="row">
+                <div style="padding-top:5px; text-align:left; padding-left:40px" class="col-sm-3 lbltitle">
+                    <label>Tên sản phẩm</label>
+                </div>
+                <div style="padding-bottom:10px" class="col-sm-9 lblinput">
+                    <input class="form-control" type="text" name="txtName" value="<?php echo $prod["ProductName"]; echo isset($_POST["txtName"])? $_POST["txtName"] :"" ?>">
+                </div>
+            </div>
+
+            <div class="row">
+                <div style="padding-top:5px; text-align:left; padding-left:40px" class="col-sm-3 lbltitle">
+                    <label>Danh mục sản phẩm</label>
+                </div>
+                <div style="padding-bottom:10px" class="col-sm-9 lblinput">
+                    <select class="form-control"  name="txtID">
+                        <option values = "" selected>----Chọn loại----</option>
+                        <?php
+                        foreach($categories as $category){
+                        ?>
+                            <option value="<?php echo $category["CateID"]?>"><?php echo $category["CategoryName"]?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div style="padding-top:5px; text-align:left; padding-left:40px" class="col-sm-3 lbltitle">
+                    <label>Mô tả sản phẩm</label>
+                </div>
+                <div style="padding-bottom:10px" class="col-sm-9 lblinput">
+                    <textarea class="form-control"  name="txtdesc" rows="5" ><?php echo $prod["Description"];?></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div style="padding-top:5px; text-align:left; padding-left:40px" class="col-sm-3 lbltitle">
+                    <label>Giá sản phẩm</label>
+                </div>
+                <div style="padding-bottom:10px" class="col-sm-9 lblinput">
+                    <input class="form-control"  type="number" name="txtprice" value="<?php echo $prod["Price"];?>">
+                </div>
+            </div>
+
+            <div class="row">
+                <div style="padding-top:5px; text-align:left; padding-left:40px" class="col-sm-3 lbltitle">
+                    <label>Số lượng sản phẩm</label>
+                </div>
+                <div style="padding-bottom:10px" class="col-sm-9 lblinput">
+                    <input class="form-control"  type="number" name="txtquantity" value="<?php echo $prod["Quantity"];?>">
+                </div>
+            </div>
+
+            <div class="row">
+                <div style="padding-top:5px; text-align:left; padding-left:40px" class="col-sm-3 lbltitle">
+                    <label>Hình ảnh sản phẩm</label>
+                </div>
+                <div style="padding-bottom:10px" class="col-sm-9 lblinput">
+                    <input class="form-control" id="txtpic"  type="file" name="txtpic" accept=".PNG,.GIF,.JPG">
+                </div>
+            </div>
         
-        <div class="lbltitle">
-            <h3 style="text-align:center; font-weight:bold; padding-bottom:20px; padding-top:10px">CẬP NHẬT SẢN PHẨM</h3>
-        </div>
-
-        <div class="row">
-            <div style="padding-top:5px; text-align:left" class="col-sm-3 lbltitle">
-                <label>Tên sản phẩm</label>
+            <div class="submit" style="margin-top:10px; margin-bottom: 10px; align:center; padding-left:208px">
+                <button class="btn btn-danger" type="submit" name="btnsubmit">Cập nhật</button>
             </div>
-            <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                <input class="form-control" type="text" name="txtName" value="<?php echo isset($_POST["txtName"])? $_POST["txtName"] :"" ?>">
-            </div>
-        </div>
-
-        <div class="row">
-            <div style="padding-top:5px; text-align:left" class="col-sm-3 lbltitle">
-                <label>Danh mục sản phẩm</label>
-            </div>
-            <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                <select class="form-control"  name="txtID">
-                    <option values = "" selected>----Chọn loại----</option>
-                    <?php
-                    foreach($categories as $category){
-                    ?>
-                        <option value="<?php echo $category["CateID"]?>"><?php echo $category["CategoryName"]?></option>
-                    <?php } ?>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div style="padding-top:5px; text-align:left" class="col-sm-3 lbltitle">
-                <label>Mô tả sản phẩm</label>
-            </div>
-            <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                <textarea class="form-control"  name="txtdesc" rows="5" ><?php echo isset($_POST["txtdesc"])? $_POST["txtdesc"] :"" ?></textarea>
-            </div>
-        </div>
-
-        <div class="row">
-            <div style="padding-top:5px; text-align:left" class="col-sm-3 lbltitle">
-                <label>Giá sản phẩm</label>
-            </div>
-            <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                <input class="form-control"  type="number" name="txtprice" value="<?php echo isset($_POST["txtprice"])? $_POST["txtprice"] :"" ?>">
-            </div>
-        </div>
-
-        <div class="row">
-            <div style="padding-top:5px; text-align:left" class="col-sm-3 lbltitle">
-                <label>Số lượng sản phẩm</label>
-            </div>
-            <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                <input class="form-control"  type="number" name="txtquantity" value="<?php echo isset($_POST["txtquantity"])? $_POST["txtquantity"] :"" ?>">
-            </div>
-        </div>
-
-        <div class="row">
-            <div style="padding-top:5px; text-align:left" class="col-sm-3 lbltitle">
-                <label>Hình ảnh sản phẩm</label>
-            </div>
-            <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                <input class="form-control" id="txtpic"  type="file" name="txtpic" accept=".PNG,.GIF,.JPG">
-            </div>
-        </div>
-       
-        <div class="submit" style="margin-top:10px; margin-bottom: 10px">
-            <button class="btn btn-danger" type="submit" name="btnsubmit">Cập nhật</button>
-        </div>
-    </form>
-</center>
+        </form>
+    </div>
+</div>
 
 <?php include_once("footer.php");?>

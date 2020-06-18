@@ -47,7 +47,7 @@
                         <div class="submit" style="margin-top:10px; margin-bottom: 10px">
                             <a class="btn btn-success" type="submit" name="btnsubmit" href="./product_detail.php?id=<?php echo $item["ProductID"]?>"> Mua ngay </a>
                             <a class="btn btn-primary" type="submit" name="btnsubmit" href="./update_product.php?id=<?php echo $item["ProductID"]?>"> Chỉnh sửa </a>
-                            <a class="btn btn-danger" type="submit" name="btnsubmit" href="./delete_product.php"> Xóa </a>
+                            <a class="btn btn-danger" type="submit" name="btnsubmit" href="./delete_product.php?id=<?php echo $item["ProductID"]?>"> Xóa </a>
                         </div>
                     </div>
                 </div>                   
