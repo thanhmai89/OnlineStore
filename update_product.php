@@ -20,13 +20,23 @@
         $description = $_POST["txtdesc"];
         $picture = $_FILES["txtpic"];
 
-        $newProduct = new Product($productName, $cateID, $price, $quantity, $description, $picture);
-        $result = $newProduct->update($id);
-        if(!$result){
-            header("Location: update_product.php?failture");
-        }else{
-            header("Location: update_product.php?updated");
+        $file_temp = $picture["tmp_name"];
+        print_r($file_temp);
+        $user_file = $picture["name"];
+        $timestamp = date("Y").date("m").date("d").date("h").date("i").date("s");
+        $filepath = "./images/".$timestamp.$user_file;
+        if(move_uploaded_file($file_temp, $filepath) == false){
+            return false;
         }
+        
+        $productID=intval($_GET['id']);
+        $db = new Db();
+        $connection = $db->connect();
+        $sql="UPDATE product SET ProductName = ?, CateID = ?, Price = ?, Quantity = ?, Description = ?, Picture = ? WHERE ProductID = ?";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param('sidissi', $productName, $cateID, $price, $quantity, $description, $filepath, $productID);
+        $stmt->execute();
+        header('Location: list_product.php');
     }
 
     $db = new Db();
@@ -45,7 +55,7 @@
     <div class="col-sm-3">
         <div class="row">
             <div style="padding-right:50px" class="col-sm-4">
-                <img src="<?php echo "/PHP_Lab3/".$prod["Picture"];?>" class="img-reponsive" style="width:300px; height:350px; padding-top:10px" alt="Image">
+            <img src="<?php echo "/PHP_Lab3/".$prod["Picture"];?>" class="img-reponsive" style="width:250px; height:250px; padding-top:10px" alt="Image">
             </div>
         </div>
     </div>
@@ -69,13 +79,13 @@
                     <strong>Cập nhật sản phẩm thất bại!
                 </div>
             <?php } ?>
-            
+          
             <div class="row">
                 <div style="padding-top:5px; text-align:left; padding-left:40px" class="col-sm-3 lbltitle">
                     <label>Tên sản phẩm</label>
                 </div>
                 <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                    <input class="form-control" type="text" name="txtName" value="<?php echo $prod["ProductName"]; echo isset($_POST["txtName"])? $_POST["txtName"] :"" ?>">
+                    <input class="form-control" type="text" name="txtName" value="<?php echo $prod["ProductName"]; ?>">
                 </div>
             </div>
 
@@ -89,7 +99,7 @@
                         <?php
                         foreach($categories as $category){
                         ?>
-                            <option value="<?php echo $category["CateID"]?>"><?php echo $category["CategoryName"]?></option>
+                            <option value="<?php echo $category["CateID"]?>"><?php echo $category['CategoryName']?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -100,7 +110,7 @@
                     <label>Mô tả sản phẩm</label>
                 </div>
                 <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                    <textarea class="form-control"  name="txtdesc" rows="5" ><?php echo $prod["Description"];?></textarea>
+                    <textarea class="form-control"  name="txtdesc" rows="5" ><?php echo $prod['Description'];?></textarea>
                 </div>
             </div>
 
@@ -109,7 +119,7 @@
                     <label>Giá sản phẩm</label>
                 </div>
                 <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                    <input class="form-control"  type="number" name="txtprice" value="<?php echo $prod["Price"];?>">
+                    <input class="form-control"  type="number" name="txtprice" value="<?php echo $prod['Price'];?>">
                 </div>
             </div>
 
@@ -118,7 +128,7 @@
                     <label>Số lượng sản phẩm</label>
                 </div>
                 <div style="padding-bottom:10px" class="col-sm-9 lblinput">
-                    <input class="form-control"  type="number" name="txtquantity" value="<?php echo $prod["Quantity"];?>">
+                    <input class="form-control"  type="number" name="txtquantity" value="<?php echo $prod['Quantity'];?>">
                 </div>
             </div>
 

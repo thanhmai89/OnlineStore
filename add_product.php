@@ -18,6 +18,7 @@
         }else{
             header("Location: add_product.php?inserted");
         }
+        header('Location: list_product.php');
     }
 
     $db = new Db();

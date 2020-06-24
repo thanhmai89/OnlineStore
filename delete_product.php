@@ -45,7 +45,7 @@
     <div class="col-sm-3">
         <div class="row">
             <div style="padding-right:50px" class="col-sm-4">
-                <img src="<?php echo "/PHP_Lab3/".$prod["Picture"];?>" class="img-reponsive" style="width:300px; height:350px; padding-top:10px" alt="Image">
+            <img src="<?php echo "/PHP_Lab3/".$prod["Picture"];?>" class="img-reponsive" style="width:250px; height:250px; padding-top:10px" alt="Image">
             </div>
         </div>
     </div>

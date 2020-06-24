@@ -76,21 +76,24 @@
             return $result;
         } 
 
-        public function update($id){
-            $file_temp = $this->picture["tmp_name"];
-            print_r($file_temp);
-            $user_file = $this->picture["name"];
-            $timestamp = date("Y").date("m").date("d").date("h").date("i").date("s");
-            $filepath = "./images/".$timestamp.$user_file;
-            if(move_uploaded_file($file_temp, $filepath) == false){
-                return false;
-            }
+        // public function update($id){
+        //     $file_temp = $this->picture["tmp_name"];
+        //     print_r($file_temp);
+        //     $user_file = $this->picture["name"];
+        //     $timestamp = date("Y").date("m").date("d").date("h").date("i").date("s");
+        //     $filepath = "./images/".$timestamp.$user_file;
+        //     if(move_uploaded_file($file_temp, $filepath) == false){
+        //         return false;
+        //     }
 
-            $db = new Db();
-            $sql = "UPDATE Product SET ProductName=$productName, CateID=$cateID, Price=$price, Quantity=$quantity, Description=$description, Picture=$filepath WHERE ProductID=$id";
-            $result = $db->query_excute($sql);
-            return $result;
-        }
+        //     $db = new Db();
+        //     $connection = $db->connect();
+        //     $sql="UPDATE product SET ProductName = ?, CateID = ?, Price = ?, Quantity = ?, Description = ?, Picture = ? WHERE ProductID = ?";
+        //     $stmt = $connection->prepare($sql);
+        //     $stmt->bind_param('sidissi', $productName, $cateID, $price, $quantity, $description, $filepath, $productID);
+        //     $result = $stmt->execute();
+        //     return $result;
+        // }
 
         public function delete($id) {
             $db = new Db();
