@@ -34,7 +34,7 @@
                 </form>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Đăng ký</a></li>
+                    <li><a href="./shopping_cart.php"><span class="glyphicon glyphicon-user"></span> Giỏ hàng</a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
                 </ul>
             </div>

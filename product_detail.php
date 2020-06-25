@@ -47,7 +47,10 @@
                     <h3 class="text-info"><?php echo $prod["ProductName"]; ?></h3>
                     <p>Mô tả: <?php echo $prod["Description"];?></p>
                     <p>Giá: <?php echo $prod["Price"];?> đồng</p>
-                    <p><button type="button" class="btn btn-danger">Mua hàng</button></p>
+                    <p>
+                        <a class="btn btn-success" type="submit" name="btnsubmit" onclick="location.href='/PHP_Lab3/shopping_cart.php?id=<?php echo $prod["ProductID"]; ?>'"> Mua ngay </a>
+                        <a class="btn btn-danger" type="button" name="btnsubmit" onclick="location.href='/PHP_Lab3/delete_product.php?id=<?php echo $prod["ProductID"]; ?>'"> Xóa </a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -57,14 +60,16 @@
             <?php
             foreach ($prods_relate as $item) {
             ?>
-                <div class="col-sm-4">
-                    <a href="/PHP_Lab3/product_detail.php?id=<?php echo $item["ProductID"]; ?>">
-                        <img src="<?php echo "/PHP_Lab3/".$item["Picture"];?>" class="img-reponsive" style="width:200px; height:200px" alt="Image">
-                    </a>
-                    <p style="padding-left:40px; padding-top:10px" class="text-danger"><?php echo $item["ProductName"]; ?></p>
-                    <p style="padding-left:50px" class="text-info"><?php echo $item["Price"]; ?> đồng</p>
-                    <p style="padding-left:50px"><button type="button" class="btn btn-success">Mua hàng</button></p>
-                </div>
+                <center>
+                    <div class="col-sm-4">
+                        <a href="/PHP_Lab3/product_detail.php?id=<?php echo $item["ProductID"]; ?>">
+                            <img src="<?php echo "/PHP_Lab3/".$item["Picture"];?>" class="img-reponsive" style="width:200px; height:200px" alt="Image">
+                        </a>
+                        <p style="padding-top:10px" class="text-danger"><?php echo $item["ProductName"]; ?></p>
+                        <p class="text-info"><?php echo $item["Price"]; ?> đồng</p>
+                        <p ><button type="button" class="btn btn-success" onclick="location.href='/PHP_Lab3/product_detail.php?id=<?php echo $item["ProductID"]; ?>'">Chi tiết</button></p>
+                    </div>
+                </center>
             <?php } ?>
         </div>
     </div>

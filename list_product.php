@@ -45,9 +45,9 @@
                         <p class="card-text"><?php echo $item["Description"]?></p>
                         <p class="card-text">Giá: <?php echo $item["Price"]?> đồng</p>
                         <div class="submit" style="margin-top:10px; margin-bottom: 10px">
-                            <a class="btn btn-success" type="submit" name="btnsubmit" href="./product_detail.php?id=<?php echo $item["ProductID"]?>"> Mua ngay </a>
+                            <a class="btn btn-success" type="submit" name="btnsubmit" onclick="location.href='/PHP_Lab3/shopping_cart.php?id=<?php echo $item["ProductID"]; ?>'"> Mua ngay </a>
                             <a class="btn btn-primary" type="submit" name="btnsubmit" href="./update_product.php?id=<?php echo $item["ProductID"]?>"> Chỉnh sửa </a>
-                            <a class="btn btn-danger" type="submit" name="btnsubmit" href="./delete_product.php?id=<?php echo $item["ProductID"]?>"> Xóa </a>
+                            <a class="btn btn-danger" type="submit" name="btnsubmit" href="./product_detail.php?id=<?php echo $item["ProductID"]?>"> Chi tiết </a>
                         </div>
                     </div>
                 </div>                   
