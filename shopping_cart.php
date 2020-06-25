@@ -38,26 +38,26 @@
         }
         header("location: shopping_cart.php");
     }
-    if (isset($_POST["btnsubmit"])) {
-        // $item_id = $_GET["id"];
-        // if (!empty($_SESSION["cart_items"])) {
-        //     foreach ($_SESSION["cart_items"] as $select => $val) {
-        //         if($val["id"] == $item_id)
-        //         {
-        //             unset($_SESSION["cart_items"][$select]);
-        //         }
-        //     }
-        // }
+    // if (isset($_POST["btnsubmit"])) {
+    //     $item_id = $_GET["id"];
+    //     if (!empty($_SESSION["cart_items"])) {
+    //         foreach ($_SESSION["cart_items"] as $key => $value) {
+    //             if($value["id"] == $item_id)
+    //             {
+    //                 unset($_SESSION["cart_items"][$select]);
+    //             }
+    //         }
+    //     }
         
-        if(!empty($_SESSION["cart_items"])) {
-			foreach($_SESSION["cart_items"] as $k => $v) {
-				if($_GET["id"] == $k)
-					unset($_SESSION["cart_items"][$k]);				
-				if(empty($_SESSION["cart_items"]))
-					unset($_SESSION["cart_items"]);
-			}
-		}
-    }
+        // if(!empty($_SESSION["cart_items"])) {
+		// 	foreach($_SESSION["cart_items"] as $key => $value) {
+		// 		if($_GET["id"] == $key)
+		// 			unset($_SESSION["cart_items"][$key]);				
+		// 		if(empty($_SESSION["cart_items"]))
+		// 			unset($_SESSION["cart_items"]);
+		// 	}
+		// }
+    // }
 ?>
 <div class="container-fluid">
 	<div class="row">
@@ -87,7 +87,7 @@
                             <th>Số lượng</th>
                             <th>Đơn giá</th>
                             <th>Thành tiền</th>
-                            <th>Xóa</th>
+                            <!-- <th>Xóa</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -108,7 +108,7 @@
                                 <td><?php echo $item["quantity"]?></td>
                                 <td><?php echo number_format($prod["Price"])?></td>
                                 <td><?php echo number_format($item["quantity"]*$prod["Price"])?></td>
-                                <td><button name="btnsubmit" type="button" class="btn btn-danger mt-1 mb-1">Xóa</button></td>
+                                <!-- <td><button name="btnsubmit" type="button" class="btn btn-danger mt-1 mb-1">Xóa</button></td> -->
                             </tr>
                         <?php
                                 }
@@ -123,6 +123,7 @@
                         <td colspan=5>
                             <button onclick="location.href='list_product.php'" type="button" class="btn btn-primary">Tiếp tục mua hàng</button>
                             <button type="button" class="btn btn-success">Thanh toán</button>
+                            <button onclick="location.href='delete_cart.php'" type="button" class="btn btn-danger">Xóa giỏ hàng</button>
                         </td>
                     </tr>
                     <?php
