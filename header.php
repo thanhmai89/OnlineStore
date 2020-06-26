@@ -34,8 +34,20 @@
                 </form>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="./shopping_cart.php"><span class="glyphicon glyphicon-user"></span> Giỏ hàng</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
+                    <li><a href="./shopping_cart.php"> <img style="width: 22px" src="/PHP_Lab3/images/shopping_cart.png" alt="Image"> Giỏ hàng</a></li>
+                    <!-- <li><a href="./register.php"><span class="glyphicon glyphicon-user"></span> Đăng ký</a></li> -->
+                    <!-- <li><a href="./login.php"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li> -->
+                    <li>
+                        <?php
+                            session_start();
+                            if(isset($_SESSION['user'])!="")
+                            {
+                                echo "<li><h5>Xin chào ".$_SESSION['user']."<a href='/PHP_Lab3/logout.php'>Đăng xuất</a></h5></li>";
+                            } else{
+                                echo "<li><a href='/PHP_Lab3/register.php'><span class='glyphicon glyphicon-user'></span>Đăng ký</a></li><li><a href='/PHP_Lab3/login.php'><span class='glyphicon glyphicon-log-in'></span>Đăng nhập</a></li>";
+                            }
+                        ?>
+                    </li>
                 </ul>
             </div>
         </nav>

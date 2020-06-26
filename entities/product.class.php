@@ -101,5 +101,22 @@
             $result = $db->query_excute($sql);
             return $result;
         }
+
+        // public function remove($id) {
+
+        //     if(!$this->items || !$this->items[$id]) {
+        //         return false;  // maybe throw an exception here?
+        //     }
+    
+        //     // keep those totals in sync...... 
+        //     // todo: instead of having this info in variables and keeping them in sync with the real data of $this->items, create a method to calculate the totals when needed.
+        //     $this->totalQty -= $this->items[$id]['quantity'];
+        //     $this->shippingCost = ($this->totalQty * 1) + 1;
+        //     $this->totalPrice -=  $this->items[$id] * $this->items[$id]['quantity'];
+        //     $this->subTotal = $this->totalPrice + $this->shippingCost;
+    
+        //     // and remove the item
+        //     unset($this->items[$id]);
+        // }
     }
 ?>

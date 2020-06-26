@@ -12,7 +12,8 @@
         $prods = Product::list_product_by_cateid($cateid);
     }
     $cates = Category::list_category();
-    session_start();
+
+    // session_start();
     error_reporting(E_ALL);
     ini_set('display_errors','1');
     if(isset($_GET["id"])){
@@ -38,26 +39,6 @@
         }
         header("location: shopping_cart.php");
     }
-    // if (isset($_POST["btnsubmit"])) {
-    //     $item_id = $_GET["id"];
-    //     if (!empty($_SESSION["cart_items"])) {
-    //         foreach ($_SESSION["cart_items"] as $key => $value) {
-    //             if($value["id"] == $item_id)
-    //             {
-    //                 unset($_SESSION["cart_items"][$select]);
-    //             }
-    //         }
-    //     }
-        
-        // if(!empty($_SESSION["cart_items"])) {
-		// 	foreach($_SESSION["cart_items"] as $key => $value) {
-		// 		if($_GET["id"] == $key)
-		// 			unset($_SESSION["cart_items"][$key]);				
-		// 		if(empty($_SESSION["cart_items"]))
-		// 			unset($_SESSION["cart_items"]);
-		// 	}
-		// }
-    // }
 ?>
 <div class="container-fluid">
 	<div class="row">
@@ -87,7 +68,7 @@
                             <th>Số lượng</th>
                             <th>Đơn giá</th>
                             <th>Thành tiền</th>
-                            <!-- <th>Xóa</th> -->
+                            <th>Xóa</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -108,19 +89,18 @@
                                 <td><?php echo $item["quantity"]?></td>
                                 <td><?php echo number_format($prod["Price"])?></td>
                                 <td><?php echo number_format($item["quantity"]*$prod["Price"])?></td>
-                                <!-- <td><button name="btnsubmit" type="button" class="btn btn-danger mt-1 mb-1">Xóa</button></td> -->
+                                <td><a name="delete" onclick="return confirm('Bạn có chắc muốn xóa không?');" type="button" class="btn btn-danger mt-1 mb-1" href="delete_cart.php?id=<?php echo $prod["ProductID"]?>">Xóa</a></td>
                             </tr>
                         <?php
                                 }
                         ?>
-
                     <tr>
-                        <td colspan=5>
-                            <span class="label label-danger"><b>Tổng tiền: <?php echo number_format($total_money)?> VNĐ</b></span>
+                        <td colspan=6>
+                            <span style="width:100%" class="label label-danger"><b>Tổng tiền: <?php echo number_format($total_money)?> đồng</b></span>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan=5>
+                        <td colspan=6>
                             <button onclick="location.href='list_product.php'" type="button" class="btn btn-primary">Tiếp tục mua hàng</button>
                             <button type="button" class="btn btn-success">Thanh toán</button>
                             <button onclick="location.href='delete_cart.php'" type="button" class="btn btn-danger">Xóa giỏ hàng</button>
@@ -150,6 +130,4 @@
         text-align: left;
         padding: 8px;
     }
-
-    tr:nth-child(even) {background-color: #f2f2f2;}
 </style>
