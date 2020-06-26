@@ -1,28 +1,11 @@
 <?php
+    session_start();
     if(isset($_SESSION['user'])!="")
     {
         header("Location: index.php");
     }
 
     require_once("./entities/user.class.php");
-
-    // if(isset($_POST['btn-login']))
-    // {
-    //     $u_name = $_POST['txtname'];
-    //     $u_pass = $_POST['txtpass'];
-    //     $account = new User($u_name, $u_email, $u_pass);
-    //     $result = $account->save();
-
-    //     if(!$result)
-    //     {
-
-    //     } else{
-    //         $_SESSION['user'] = $u_name;
-    //         header("Location: index.php");
-    //     }
-    // }
-
-    // session_start();
 
     if (isset($_POST['btn-login']) && !empty($_POST['btn-login'])) {
         include_once("./config/db.class.php");
@@ -33,19 +16,20 @@
             echo "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.";
             exit;
         }
+        $result = User::checkLogin($u_name, $u_pass);
 
-        $newUser = User::makeNewWithParameter1("$u_name", "$u_pass");
-        $result = $newUser->checkLogin($u_name, $u_pass);
+        if($result){
+            $_SESSION['user'] = $u_name;
+            echo "<h2>Xin chào " . $u_name . ". Bạn đã đăng nhập thành công.";
+            header('location: index.php');
+        }
 
-        $_SESSION['username'] = $u_name;
-        echo "Xin chào " . $u_name . ". Bạn đã đăng nhập thành công.";
-        die();
     }
 ?>
 
 <?php include_once("header.php"); ?>
 <center>
-    <form action='login.php?do=login' method="post" style="width:50%">
+    <form  method="post" style="width:50%">
         <div class="lbltitle">
             <h3 style="text-align:center; font-weight:bold; padding-bottom:20px; padding-top:10px">ĐĂNG NHẬP TÀI KHOẢN</h3>
         </div>

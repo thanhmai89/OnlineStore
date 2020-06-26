@@ -42,7 +42,7 @@
                             session_start();
                             if(isset($_SESSION['user'])!="")
                             {
-                                echo "<li><h5>Xin chào ".$_SESSION['user']."<a href='/PHP_Lab3/logout.php'>Đăng xuất</a></h5></li>";
+                                echo "<li style='padding-top:9px'><h5 style='color:white'>Xin chào ".$_SESSION['user']."<a style='padding-right:5px' href='/PHP_Lab3/logout.php'> Đăng xuất </a></h5></li>";
                             } else{
                                 echo "<li><a href='/PHP_Lab3/register.php'><span class='glyphicon glyphicon-user'></span>Đăng ký</a></li><li><a href='/PHP_Lab3/login.php'><span class='glyphicon glyphicon-log-in'></span>Đăng nhập</a></li>";
                             }
