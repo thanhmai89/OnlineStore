@@ -25,7 +25,8 @@
         }else{
             foreach($_SESSION["cart_items"] as $item){
                 $i++;
-                while(list($key, $value) = each($item)){
+                foreach($item as $key => $value){
+                // while(list($key, $value) = each($item)){
                     if($key == "pro_id" && $value == $pro_id){
                         array_splice($_SESSION["cart_items"],$i-1,1,array(array("pro_id"=>$pro_id, "quantity"=>$item["quantity"]+1)));
                         $was_found = true;
@@ -37,7 +38,8 @@
                 array_push($_SESSION["cart_items"],array("pro_id"=>$pro_id,"quantity"=>1));
             }
         }
-        header("location: shopping_cart.php");
+
+        // header("location: shopping_cart.php");
     }
 ?>
 <div class="container-fluid">
@@ -89,7 +91,7 @@
                                 <td><?php echo $item["quantity"]?></td>
                                 <td><?php echo number_format($prod["Price"])?></td>
                                 <td><?php echo number_format($item["quantity"]*$prod["Price"])?></td>
-                                <td><a name="delete" onclick="return confirm('Bạn có chắc muốn xóa không?');" type="button" class="btn btn-danger mt-1 mb-1" href="delete_cart.php?id=<?php echo $prod["ProductID"]?>">Xóa</a></td>
+                                <td><a name="delete" onclick="return confirm('Bạn có chắc muốn xóa không?');" type="button" class="btn btn-danger mt-1 mb-1" href="delete_cart.php?id=<?php echo $item["pro_id"]?>">Xóa</a></td>
                             </tr>
                         <?php
                                 }
@@ -103,7 +105,7 @@
                         <td colspan=6>
                             <button onclick="location.href='list_product.php'" type="button" class="btn btn-primary">Tiếp tục mua hàng</button>
                             <button type="button" class="btn btn-success">Thanh toán</button>
-                            <button onclick="location.href='delete_cart.php'" type="button" class="btn btn-danger">Xóa giỏ hàng</button>
+                            <!-- <button onclick="location.href='delete_cart.php'" type="button" class="btn btn-danger">Xóa giỏ hàng</button> -->
                         </td>
                     </tr>
                     <?php

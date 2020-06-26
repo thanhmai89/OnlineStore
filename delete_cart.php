@@ -1,31 +1,14 @@
 <?php
     session_start();
     $cart=$_SESSION['cart_items'];
-    if(isset($_GET['pro_id']) && isset($_SESSION['cart_items'])){      
-        $pro_id=$_GET['pro_id'];
-        if($pro_id == 0)
-        {
-            unset($_SESSION['cart_items']);
-        }
-        else
-        {
-            unset($_SESSION['cart_items'][$pro_id]);
-        }
-
-        header("location: shopping_cart.php");
-        exit();
-               
-        // if(isset($_GET["delete"])){
-        //     if($id == 0)
-        //     {
-        //         unset($_SESSION["cart_items"]);
-        //     }
-        //     else
-        //     {
-        //         unset($_SESSION["cart_items"][$id]);
-        //     }
-        // }           
-        // header("location: shopping_cart.php");
-        // exit();
+    $id=$_GET['id'];
+    function isID($var){
+        return $var["pro_id"] != $_GET['id'];
     }
+    if($id >= 0){
+        $arr = $_SESSION['cart_items'];
+        $_SESSION['cart_items'] = array_filter($arr, "isID");
+    }
+    header("location: shopping_cart.php");
+    exit();
 ?>
