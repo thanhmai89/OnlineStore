@@ -1,7 +1,7 @@
 <?php
     if(isset($_SESSION['user'])!="")
     {
-        header("Location: index.php");
+        header("Location: login.php");
     }
 
     require_once("./entities/user.class.php");
@@ -11,7 +11,13 @@
         $u_name = $_POST['txtname'];
         $u_email = $_POST['txtemail'];
         $u_pass = $_POST['txtpass'];
-        $account = new User($u_name, $u_email, $u_pass);
+
+        if (!$u_name || !$u_email || !$u_pass) {
+            echo "Vui lòng nhập đầy đủ thông tin đăng ký!";
+            exit;
+        }
+
+        $account = User::makeNewWithParameter("$u_name", "$u_email", "$u_pass");
         $result = $account->save();
 
         if(!$result)
@@ -21,14 +27,14 @@
             <?php
         } else{
             $_SESSION['user'] = $u_name;
-            header("Location: index.php");
+            header("Location: login.php");
         }
     }
 ?>
 
 <?php include_once("header.php"); ?>
 <center>
-    <form method="post" style="width:50%">
+    <form action='register.php?do=register' method="post" style="width:50%">
         <div class="lbltitle">
             <h3 style="text-align:center; font-weight:bold; padding-bottom:20px; padding-top:10px">ĐĂNG KÝ TÀI KHOẢN</h3>
         </div>

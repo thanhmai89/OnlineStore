@@ -8,10 +8,19 @@
         public $email;
         public $password;
 
-        public function __construct($u_name, $u_email, $u_pass){
-            $this->userName = $u_name;
-            $this->email = $u_email;
-            $this->password = $u_pass;
+        public function __construct(){}
+
+        public function makeNewWithParameter($u_name, $u_email, $u_pass){
+            $obj = new User(); 
+            return $obj;
+            // $this->userName = $u_name;
+            // $this->email = $u_email;
+            // $this->password = $u_pass;
+        }
+
+        public static function makeNewWithParameter1($u_name, $u_pass) {
+            $obj = new User(); 
+            return $obj;
         }
 
         public function save(){
@@ -23,11 +32,11 @@
             return $result;
         }
 
-        public static function checkLogin($userName, $password){
+        public static function checkLogin($username, $password){
             $password = md5($password);
             $db = new Db();
             $sql = "SELECT * FROM users where UserName='$username' AND Password = '$password'";
-            $result = $db->query_execute($sql);
+            $result = $db->query_excute($sql);
             return $result;
         }
     }

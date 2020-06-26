@@ -15,20 +15,17 @@
 
     //     if(!$result)
     //     {
-    //         ?>
-    //         <script>alert('Có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu!');</script>
-    //         <?php
+
     //     } else{
     //         $_SESSION['user'] = $u_name;
     //         header("Location: index.php");
     //     }
     // }
 
-    session_start();
+    // session_start();
 
     if (isset($_POST['btn-login']) && !empty($_POST['btn-login'])) {
-        include("db.class.php");
-        $db = new Db();
+        include_once("./config/db.class.php");
         $u_name = $_POST['txtname'];
         $u_pass = $_POST['txtpass'];
         
@@ -36,19 +33,9 @@
             echo "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.";
             exit;
         }
-        
-        $u_pass = md5($u_pass);
-        $query = mysql_query("SELECT UserName, Password FROM users WHERE UserName='$u_name'");
-        if (mysql_num_rows($query) == 0) {
-            echo "Tên đăng nhập này không tồn tại. Vui lòng kiểm tra lại.";
-            exit;
-        }
 
-        $row = mysql_fetch_array($query);
-        if ($u_pass != $row['Password']) {
-            echo "Mật khẩu không đúng. Vui lòng nhập lại.";
-            exit;
-        }
+        $newUser = User::makeNewWithParameter1("$u_name", "$u_pass");
+        $result = $newUser->checkLogin($u_name, $u_pass);
 
         $_SESSION['username'] = $u_name;
         echo "Xin chào " . $u_name . ". Bạn đã đăng nhập thành công.";
